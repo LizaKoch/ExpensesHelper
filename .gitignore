@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+.idea
+
+fastapi.db
+
+.env
+
+.venv
+
+.ruff_cache
+
+.DS_Store
