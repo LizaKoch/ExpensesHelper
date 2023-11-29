@@ -28,12 +28,13 @@ async def get_all_categories(
     response_model=CategoryDB,
     dependencies=[Depends(current_superuser)],
 )
-async def create_new_ctegory(
+async def create_new_category(
         category: CategoryCreate,
         session: AsyncSession = Depends(get_async_session),
 ):
     """Create new category."""
     await check_name_duplicate(
-        category.id, session,
+        category.name, session,
     )
-    return await category_crud.create(category, session)
+    new_category = await category_crud.create(category, session)
+    return new_category

@@ -5,3 +5,11 @@ lint:
 
 fmt:
 	poetry run ruff . --fix
+
+migrations:
+	alembic revision --autogenerate
+
+migrate:
+	alembic upgrade head
+rbmigrate:
+	alembic downgrade base

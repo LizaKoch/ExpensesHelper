@@ -1,10 +1,11 @@
 from typing import Optional
+from datetime import datetime
 
 from pydantic import BaseModel, validator
 
 
 class ExpenseBase(BaseModel):
-    title: str
+    name: str
     amount: float
     description: Optional[str] = None
 
@@ -20,11 +21,14 @@ class ExpenseUpdate(ExpenseBase):
 
 class ExpenseCreate(ExpenseUpdate):
     category_id: int
+    date: datetime
 
 
 class ExpenseDB(ExpenseBase):
     id: int
     category_id: int
+    user_id: Optional[int]
+    date: datetime
 
     class Config:
         """ORM mode."""

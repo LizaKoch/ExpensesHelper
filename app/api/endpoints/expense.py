@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.db import get_async_session
 from app.core.user import User, current_user
 from app.schemas.expense import ExpenseCreate, ExpenseDB
+from app.crud.expenses import expense_crud
 
 router = APIRouter(
     prefix='/expenses',
@@ -19,13 +20,15 @@ async def get_my_expenses(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user),
 ):
-    """Получение списка расходов текущего пользователя"""
-    expenses = await expense_crud.get_multi(session, user.id)
+    """Получение списка расходов текущего пользователя."""
+    expenses = await expense_crud.get_by_user(
+        session=session, user=user
+    )
     return expenses
 
 @router.post(
     '/',
-    response_model=ExpenseDB,
+    response_model=ExpenseCreate,
 )
 async def create_expense(
         expense: ExpenseCreate,
